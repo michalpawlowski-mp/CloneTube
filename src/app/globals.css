@@ -3,11 +3,12 @@
 nav {
   --sb-track-color: #232e33;
   --sb-thumb-color: #484848;
-  --sb-size: 6px;
+  --sb-size: 4px;
 }
 
 nav::-webkit-scrollbar {
-  width: var(--sb-size)
+  width: var(--sb-size);
+  height: var(--sb-size);
 }
 
 nav::-webkit-scrollbar-track {
@@ -18,12 +19,11 @@ nav::-webkit-scrollbar-track {
 nav::-webkit-scrollbar-thumb {
   background: var(--sb-thumb-color);
   border-radius: 5px;
-  
 }
 
 @supports not selector(::-webkit-scrollbar) {
   nav {
-    scrollbar-color: var(--sb-thumb-color)
-                     var(--sb-track-color);
+    scrollbar-width: thin;
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
   }
 }
