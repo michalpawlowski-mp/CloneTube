@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 nav {
-  --sb-track-color: #232e33;
+  --sb-track-color: #d2d2d2;
   --sb-thumb-color: #484848;
-  --sb-size: 4px;
+  --sb-size: 6px;
 }
 
 nav::-webkit-scrollbar {
@@ -13,12 +13,12 @@ nav::-webkit-scrollbar {
 
 nav::-webkit-scrollbar-track {
   background: var(--sb-track-color);
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 nav::-webkit-scrollbar-thumb {
   background: var(--sb-thumb-color);
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 @supports not selector(::-webkit-scrollbar) {
@@ -26,4 +26,12 @@ nav::-webkit-scrollbar-thumb {
     scrollbar-width: thin;
     scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
   }
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
