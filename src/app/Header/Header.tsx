@@ -3,9 +3,10 @@ import { useState } from "react";
 
 interface HeaderProps {
   onSearch: (query: string) => void;
+  onResetCategory: () => void; // nowy props
 }
 
-export default function Header({ onSearch }: HeaderProps) {
+export default function Header({ onSearch, onResetCategory }: HeaderProps) {
   const [inputValue, setInputValue] = useState("");
 
   const handleSearch = () => {
@@ -19,7 +20,10 @@ export default function Header({ onSearch }: HeaderProps) {
 
   return (
     <header className="bg-neutral-900 w-full h-max shadow flex items-center justify-between py-4 px-2">
-      <div className="text-white flex items-center">
+      <div
+        className=" flex items-center cursor-pointer"
+        onClick={onResetCategory}
+      >
         <Image
           src="/yt-logo.svg"
           alt="CloneTube Logo"
@@ -38,7 +42,7 @@ export default function Header({ onSearch }: HeaderProps) {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="border-2 border-r-0 rounded-l-xl border-white text-white bg-transparent focus:outline-none px-2 py-2"
+          className="border-2 border-r-0 rounded-l-xl border-white  bg-transparent focus:outline-none px-2 py-2"
         />
         <button
           onClick={handleSearch}

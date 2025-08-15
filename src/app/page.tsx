@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Header from "./Header/Header";
 import Nav from "./Nav/Nav";
-import VideoGrid from "./VideoGrid/VideoGrid";
+import VideoView from "./VideoView/VideoView";
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("js");
@@ -12,15 +12,19 @@ export default function Home() {
     setSelectedCategory(query);
   };
 
+  const resetCategory = () => {
+    setSelectedCategory("js");
+  };
+
   return (
     <>
-      <Header onSearch={handleSearch} />
+      <Header onSearch={handleSearch} onResetCategory={resetCategory} />
       <div className="w-full h-full flex flex-col lg:flex-row">
         <Nav
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
-        <VideoGrid selectedCategory={selectedCategory} />
+        <VideoView selectedCategory={selectedCategory} />
       </div>
     </>
   );

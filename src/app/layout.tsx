@@ -18,7 +18,9 @@ export const metadata: Metadata = {
     "API Youtube",
     "YouTube API",
   ],
-  authors: [{ name: "MPDEV", url: "https://pawlowskimichal.pl/" }],
+  authors: [
+    { name: "MPDEV | Michał Pawłowski", url: "https://pawlowskimichal.pl/" },
+  ],
   icons: {
     icon: "/yt-logo.ico",
   },
@@ -31,7 +33,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
     <html lang="pl">
-      <body className="bg-neutral-800 text-gray-900 overflow-hidden w-screen h-screen">
+      <body className="bg-neutral-800 text-white overflow-hidden w-screen h-screen">
         {children}
       </body>
     </html>
