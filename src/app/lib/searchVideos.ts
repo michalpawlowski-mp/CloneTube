@@ -1,14 +1,4 @@
-// import { searchVideos } from "../lib/searchVideos";
-
-// export async function GET(request: Request) {
-//   const { searchParams } = new URL(request.url);
-//   const q = searchParams.get("q") || "";
-//   const pageToken = searchParams.get("pageToken");
-//   const data = await searchVideos(q, pageToken);
-//   return Response.json(data);
-// }
-const API_KEY = "AIzaSyC8T6VSyILJ0xMcNcu87TQexYnK-fCzBmU";
-// const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 export async function searchVideos(
   query: string,

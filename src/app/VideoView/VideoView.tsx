@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { searchVideos } from "../API/route";
+import { searchVideos } from "../lib/searchVideos";
 import { VideoItem, VideoGridProps } from "../types/video";
 import VideoModal from "./VideoModal";
 import VideoList from "./VideoList";
@@ -33,6 +33,7 @@ export default function VideoView({ selectedCategory }: VideoGridProps) {
 
   useEffect(() => {
     fetchVideos(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory]);
 
   useEffect(() => {
