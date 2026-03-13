@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "YouTube API",
   ],
   authors: [
-    { name: "MPDEV | Michał Pawłowski", url: "https://pawlowskimichal.pl/" },
+    { name: "MPDEV | Michał Pawłowski", url: "https://michalpawlowski.pl/" },
   ],
   icons: {
     icon: "/yt-logo.ico",
