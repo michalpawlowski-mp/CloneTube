@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 interface VideoModalProps {
   videoId: string;
@@ -10,22 +9,29 @@ export default function VideoModal({ videoId, onClose }: VideoModalProps) {
   if (!videoId) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-      <div className="bg-neutral-900 p-4 rounded-lg relative">
+    <div
+      className="fixed inset-0 bg-black/90 flex items-center justify-center z-[100] p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-neutral-900 rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="relative pt-[56.25%]">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+            className="absolute inset-0 w-full h-full"
+            allowFullScreen
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          />
+        </div>
+
         <button
-          className="absolute top-2 right-2 text-white text-2xl"
           onClick={onClose}
+          className="absolute top-4 right-4 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl transition-colors z-10"
         >
-          &times;
+          ✕
         </button>
-        <iframe
-          width="560"
-          height="315"
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title="YouTube video player"
-          className="rounded-lg"
-          allowFullScreen
-        />
       </div>
     </div>
   );

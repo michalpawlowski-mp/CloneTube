@@ -16,52 +16,53 @@ export default function VideoView({ selectedCategory }: VideoGridProps) {
     async (isNewCategory = false) => {
       if (loading) return;
       setLoading(true);
+
       const data = await searchVideos(
         selectedCategory,
-        isNewCategory ? null : nextPageToken
+        isNewCategory ? null : nextPageToken,
       );
+
       setVideos(
-        isNewCategory
-          ? data.items || []
-          : (prev) => [...prev, ...(data.items || [])]
+        isNewCategory ? data.items || [] : (prev) => [...prev, ...(data.items || [])],
       );
       setNextPageToken(data.nextPageToken || null);
       setLoading(false);
     },
-    [selectedCategory, nextPageToken, loading]
+    [selectedCategory, nextPageToken, loading],
   );
 
   useEffect(() => {
+    setVideos([]);
+    setNextPageToken(null);
     fetchVideos(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory]);
 
   useEffect(() => {
     if (!observerRef.current || !nextPageToken) return;
+
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchVideos(false);
-        }
-      },
-      { root: null, rootMargin: "200px", threshold: 0 }
+      (entries) => entries[0].isIntersecting && fetchVideos(false),
+      { rootMargin: "300px" },
     );
+
     observer.observe(observerRef.current);
     return () => observer.disconnect();
   }, [nextPageToken, fetchVideos]);
 
   return (
-    <main className="w-full lg:w-10/12 xl:w-11/12 h-[calc(100vh-128px)] lg:h-[calc(100vh-76px)] overflow-y-scroll hide-scrollbar p-4 pb-36">
+    <main className="flex-1 overflow-y-auto hide-scrollbar p-4 lg:p-6 pb-20">
       {selectedVideoId && (
-        <VideoModal
-          videoId={selectedVideoId}
-          onClose={() => setSelectedVideoId(null)}
-        />
+        <VideoModal videoId={selectedVideoId} onClose={() => setSelectedVideoId(null)} />
       )}
+
       <VideoList videos={videos} onSelectVideo={setSelectedVideoId} />
-      <div ref={observerRef} className="h-1 w-full" />
+
+      <div ref={observerRef} className="h-10 w-full" />
+
       {loading && (
-        <div className="text-center mt-4">Ładowanie kolejnych filmów...</div>
+        <div className="text-center py-8 text-neutral-400">
+          Ładowanie kolejnych filmów...
+        </div>
       )}
     </main>
   );
