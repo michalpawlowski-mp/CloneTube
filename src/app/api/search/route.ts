@@ -1,4 +1,4 @@
-import { searchVideos } from "../../lib/searchVideos";
+import { searchVideos } from "../../../lib/searchVideos";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

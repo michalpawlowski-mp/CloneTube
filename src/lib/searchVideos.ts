@@ -1,14 +1,17 @@
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const apiKey = process.env.API_KEY;
 
-export async function searchVideos(query: string, pageToken: string | null = null) {
-  if (!API_KEY) {
+export async function searchVideos(
+  query: string,
+  pageToken: string | null = null,
+) {
+  if (!apiKey) {
     console.error("Brakuje klucza API");
     return [];
   }
 
   const baseUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=24&q=${encodeURIComponent(
     query,
-  )}&key=${API_KEY}`;
+  )}&key=${apiKey}`;
   const url = pageToken ? `${baseUrl}&pageToken=${pageToken}` : baseUrl;
 
   try {

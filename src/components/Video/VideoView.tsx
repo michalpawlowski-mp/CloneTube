@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { searchVideos } from "../lib/searchVideos";
-import { VideoItem, VideoGridProps } from "../types/video";
+import { searchVideos } from "../../lib/searchVideos";
+import { VideoItem, VideoGridProps } from "../../types/video";
 import VideoModal from "./VideoModal";
 import VideoList from "./VideoList";
 
@@ -23,7 +23,9 @@ export default function VideoView({ selectedCategory }: VideoGridProps) {
       );
 
       setVideos(
-        isNewCategory ? data.items || [] : (prev) => [...prev, ...(data.items || [])],
+        isNewCategory
+          ? data.items || []
+          : (prev) => [...prev, ...(data.items || [])],
       );
       setNextPageToken(data.nextPageToken || null);
       setLoading(false);
@@ -52,7 +54,10 @@ export default function VideoView({ selectedCategory }: VideoGridProps) {
   return (
     <main className="flex-1 overflow-y-auto hide-scrollbar p-4 lg:p-6 pb-20">
       {selectedVideoId && (
-        <VideoModal videoId={selectedVideoId} onClose={() => setSelectedVideoId(null)} />
+        <VideoModal
+          videoId={selectedVideoId}
+          onClose={() => setSelectedVideoId(null)}
+        />
       )}
 
       <VideoList videos={videos} onSelectVideo={setSelectedVideoId} />

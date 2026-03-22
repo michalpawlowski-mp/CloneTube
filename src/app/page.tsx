@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Header from "./Header/Header";
-import Nav from "./Nav/Nav";
-import VideoView from "./VideoView/VideoView";
+import Header from "../components/Header/Header";
+import Nav from "../components/Nav/Nav";
+import VideoView from "../components/Video/VideoView";
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("js");
@@ -13,7 +13,7 @@ export default function Home() {
   };
 
   const resetCategory = () => {
-    setSelectedCategory("js");
+    setSelectedCategory("javascript");
   };
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { VideoItem } from "../types/video";
+import { VideoItem } from "../../types/video";
 
 interface VideoListProps {
   videos: VideoItem[];
