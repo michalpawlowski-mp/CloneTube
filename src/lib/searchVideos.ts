@@ -1,17 +1,19 @@
+import { searchVideosProps } from "@/types/video";
+
 const apiKey = process.env.API_KEY;
 
-export async function searchVideos(
-  query: string,
-  pageToken: string | null = null,
-) {
+export async function searchVideos({
+  query,
+  pageToken = null,
+}: searchVideosProps) {
   if (!apiKey) {
     console.error("Brakuje klucza API");
     return [];
   }
 
-  const baseUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=24&q=${encodeURIComponent(
-    query,
-  )}&key=${apiKey}`;
+  const baseUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=24&q=
+  ${encodeURIComponent(query)}&key=${apiKey}`;
+
   const url = pageToken ? `${baseUrl}&pageToken=${pageToken}` : baseUrl;
 
   try {

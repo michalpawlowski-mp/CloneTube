@@ -3,7 +3,7 @@ import { useState } from "react";
 
 interface HeaderProps {
   onSearch: (query: string) => void;
-  onResetCategory: () => void; // nowy props
+  onResetCategory: () => void;
 }
 
 export default function Header({ onSearch, onResetCategory }: HeaderProps) {
@@ -20,7 +20,10 @@ export default function Header({ onSearch, onResetCategory }: HeaderProps) {
 
   return (
     <header className="bg-neutral-900 w-full h-max shadow flex items-center justify-between py-4 px-2">
-      <div className=" flex items-center cursor-pointer" onClick={onResetCategory}>
+      <div
+        className=" flex items-center cursor-pointer"
+        onClick={onResetCategory}
+      >
         <Image
           src="/yt-logo.svg"
           alt="CloneTube Logo"

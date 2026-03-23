@@ -3,7 +3,10 @@ interface NavProps {
   setSelectedCategory: (category: string) => void;
 }
 
-export default function Nav({ selectedCategory, setSelectedCategory }: NavProps) {
+export default function Nav({
+  selectedCategory,
+  setSelectedCategory,
+}: NavProps) {
   const categories = [
     "Na żywo",
     "Podcast",
@@ -28,10 +31,14 @@ export default function Nav({ selectedCategory, setSelectedCategory }: NavProps)
           <li
             key={category}
             onClick={() =>
-              setSelectedCategory(selectedCategory === category ? "js" : category)
+              setSelectedCategory(
+                selectedCategory === category ? "js" : category,
+              )
             }
             className={`lg:mb-2 lg:ml-0 ml-2 rounded-xl min-w-[100px] lg:min-w-0 text-center items-center p-1 cursor-pointer transition-all ${
-              selectedCategory === category ? "bg-white text-black" : "bg-neutral-700"
+              selectedCategory === category
+                ? "bg-white text-black"
+                : "bg-neutral-700"
             }`}
           >
             {category}

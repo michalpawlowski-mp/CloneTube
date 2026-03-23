@@ -1,11 +1,6 @@
 "use client";
 import Image from "next/image";
-import { VideoItem } from "../../types/video";
-
-interface VideoListProps {
-  videos: VideoItem[];
-  onSelectVideo: (videoId: string) => void;
-}
+import { VideoListProps } from "@/types/video";
 
 export default function VideoList({ videos, onSelectVideo }: VideoListProps) {
   return (

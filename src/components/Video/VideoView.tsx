@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState, useRef, useCallback } from "react";
 import { searchVideos } from "../../lib/searchVideos";
 import { VideoItem, VideoGridProps } from "../../types/video";

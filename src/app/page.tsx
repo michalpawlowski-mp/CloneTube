@@ -6,7 +6,7 @@ import Nav from "../components/Nav/Nav";
 import VideoView from "../components/Video/VideoView";
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("js");
+  const [selectedCategory, setSelectedCategory] = useState("javascript");
 
   const handleSearch = (query: string) => {
     setSelectedCategory(query);

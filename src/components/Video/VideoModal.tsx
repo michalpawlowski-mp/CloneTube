@@ -1,9 +1,6 @@
 "use client";
 
-interface VideoModalProps {
-  videoId: string;
-  onClose: () => void;
-}
+import { VideoModalProps } from "@/types/video";
 
 export default function VideoModal({ videoId, onClose }: VideoModalProps) {
   if (!videoId) return null;
