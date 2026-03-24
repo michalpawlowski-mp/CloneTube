@@ -1,32 +1,52 @@
-import { searchVideosProps } from "@/types/video";
+import { SearchVideosResponse } from "@/types/video";
 
 const apiKey = process.env.API_KEY;
 
-export async function searchVideos({
-  query,
-  pageToken = null,
-}: searchVideosProps) {
+export async function searchVideos(
+  selectedCategory: string,
+  pageToken: string | null = null,
+): Promise<SearchVideosResponse> {
   if (!apiKey) {
     console.error("Brakuje klucza API");
-    return [];
+    return { items: [], nextPageToken: null };
   }
 
-  const baseUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=24&q=
-  ${encodeURIComponent(query)}&key=${apiKey}`;
+  const baseUrl = "https://www.googleapis.com/youtube/v3/search";
 
-  const url = pageToken ? `${baseUrl}&pageToken=${pageToken}` : baseUrl;
+  const params = new URLSearchParams({
+    part: "snippet",
+    type: "video",
+    maxResults: "24",
+    key: apiKey,
+  });
+
+  // Jeśli kategoria nie jest "All", dodajemy ją jako query
+  if (selectedCategory && selectedCategory !== "All") {
+    params.append("q", selectedCategory);
+  }
+
+  if (pageToken) {
+    params.append("pageToken", pageToken);
+  }
+
+  const url = `${baseUrl}?${params.toString()}`;
 
   try {
     const res = await fetch(url);
+
     if (!res.ok) {
-      console.error("Błąd API:", res.status, await res.text());
-      return [];
+      console.error("Błąd YouTube API:", res.status);
+      return { items: [], nextPageToken: null };
     }
 
     const data = await res.json();
-    return data;
+
+    return {
+      items: data.items || [],
+      nextPageToken: data.nextPageToken || null,
+    };
   } catch (error) {
-    console.error("Błąd pobierania filmów z YouTube API:", error);
-    return [];
+    console.error("Błąd podczas pobierania filmów:", error);
+    return { items: [], nextPageToken: null };
   }
 }

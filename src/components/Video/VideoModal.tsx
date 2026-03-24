@@ -24,6 +24,7 @@ export default function VideoModal({ videoId, onClose }: VideoModalProps) {
         </div>
 
         <button
+          type="button"
           onClick={onClose}
           className="absolute top-4 right-4 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl transition-colors z-10"
         >

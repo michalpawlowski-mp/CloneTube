@@ -26,7 +26,7 @@ export interface VideoModalProps {
   onClose: () => void;
 }
 
-export interface searchVideosProps {
-  query: string;
-  pageToken: string | null;
+export interface SearchVideosResponse {
+  items: VideoItem[];
+  nextPageToken: string | null;
 }

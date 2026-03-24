@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "../styles/globals.css";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "CloneTube by MPDEV",
@@ -18,9 +18,7 @@ export const metadata: Metadata = {
     "API Youtube",
     "YouTube API",
   ],
-  authors: [
-    { name: "MPDEV | Michał Pawłowski", url: "https://michalpawlowski.pl/" },
-  ],
+  authors: [{ name: "MPDEV | Michał Pawłowski", url: "https://michalpawlowski.pl/" }],
   icons: {
     icon: "/yt-logo.ico",
   },

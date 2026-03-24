@@ -20,10 +20,7 @@ export default function Header({ onSearch, onResetCategory }: HeaderProps) {
 
   return (
     <header className="bg-neutral-900 w-full h-max shadow flex items-center justify-between py-4 px-2">
-      <div
-        className=" flex items-center cursor-pointer"
-        onClick={onResetCategory}
-      >
+      <div className=" flex items-center cursor-pointer" onClick={onResetCategory}>
         <Image
           src="/yt-logo.svg"
           alt="CloneTube Logo"
@@ -35,21 +32,28 @@ export default function Header({ onSearch, onResetCategory }: HeaderProps) {
         <p className="text-neutral-500 text-xs ml-1">PL</p>
       </div>
 
-      <div className="flex mx-auto">
+      <div className="flex w-full max-w-lg mx-auto">
         <input
           type="text"
           placeholder="Szukaj"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="border-2 border-r-0 rounded-l-xl border-white  bg-transparent focus:outline-none px-2 py-2"
+          className="flex-1 bg-neutral-800 border border-neutral-700 text-white px-4 py-2 rounded-l-full focus:outline-none focus:border-blue-500"
         />
+
         <button
+          type="button"
           onClick={handleSearch}
-          className="cursor-pointer rounded-r-xl bg-white flex items-center justify-center py-1 px-2"
-          aria-label="Szukaj"
+          className="bg-neutral-700 border border-l-0 border-neutral-700 px-5 rounded-r-full flex items-center justify-center hover:bg-neutral-600 transition"
         >
-          <Image src="/search.svg" alt="Wyszukaj" width={25} height={25} />
+          <Image
+            src="/search.svg"
+            alt="Szukaj"
+            width={24}
+            height={24}
+            className="invert"
+          />
         </button>
       </div>
     </header>
