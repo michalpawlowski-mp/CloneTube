@@ -11,7 +11,7 @@ export default function VideoModal({ videoId, onClose }: VideoModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-neutral-900 rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl"
+        className="relative bg-neutral-900 rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative pt-[56.25%]">

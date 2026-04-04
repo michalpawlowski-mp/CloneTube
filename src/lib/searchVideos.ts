@@ -20,7 +20,6 @@ export async function searchVideos(
     key: apiKey,
   });
 
-  // Jeśli kategoria nie jest "All", dodajemy ją jako query
   if (selectedCategory && selectedCategory !== "All") {
     params.append("q", selectedCategory);
   }

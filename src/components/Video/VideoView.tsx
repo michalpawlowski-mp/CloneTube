@@ -12,43 +12,56 @@ export default function VideoView({ selectedCategory }: VideoGridProps) {
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const observerRef = useRef<HTMLDivElement | null>(null);
+  const loadingRef = useRef(false);
 
-  const fetchVideos = useCallback(
-    async (isNewCategory = false) => {
-      if (loading) return;
-      setLoading(true);
+  const fetchMoreVideos = useCallback(async () => {
+    if (loadingRef.current || !nextPageToken) return;
+    loadingRef.current = true;
+    setLoading(true);
 
-      const data = await searchVideos(
-        selectedCategory,
-        isNewCategory ? null : nextPageToken,
-      );
+    const data = await searchVideos(selectedCategory, nextPageToken);
 
-      setVideos(
-        isNewCategory ? data.items || [] : (prev) => [...prev, ...(data.items || [])],
-      );
-      setNextPageToken(data.nextPageToken || null);
-      setLoading(false);
-    },
-    [selectedCategory, nextPageToken, loading],
-  );
+    setVideos((prev) => [...prev, ...(data.items ?? [])]);
+    setNextPageToken(data.nextPageToken ?? null);
+    loadingRef.current = false;
+    setLoading(false);
+  }, [selectedCategory, nextPageToken]);
 
   useEffect(() => {
+    let cancelled = false;
+
     setVideos([]);
     setNextPageToken(null);
-    fetchVideos(true);
+    setLoading(true);
+    loadingRef.current = true;
+
+    searchVideos(selectedCategory, null).then((data) => {
+      if (!cancelled) {
+        setVideos(data.items ?? []);
+        setNextPageToken(data.nextPageToken ?? null);
+        loadingRef.current = false;
+        setLoading(false);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      loadingRef.current = false;
+    };
   }, [selectedCategory]);
 
+  // Infinite scroll observer
   useEffect(() => {
     if (!observerRef.current || !nextPageToken) return;
 
     const observer = new IntersectionObserver(
-      (entries) => entries[0].isIntersecting && fetchVideos(false),
+      (entries) => entries[0].isIntersecting && fetchMoreVideos(),
       { rootMargin: "300px" },
     );
 
     observer.observe(observerRef.current);
     return () => observer.disconnect();
-  }, [nextPageToken, fetchVideos]);
+  }, [nextPageToken, fetchMoreVideos]);
 
   return (
     <main className="flex-1 overflow-y-auto hide-scrollbar p-4 lg:p-6 pb-20">

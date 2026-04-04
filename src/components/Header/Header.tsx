@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { useState } from "react";
+import SearchBar from "./SearchBar"; // ← import nowego komponentu
 
 interface HeaderProps {
   onSearch: (query: string) => void;
@@ -14,13 +17,9 @@ export default function Header({ onSearch, onResetCategory }: HeaderProps) {
     onSearch(inputValue.trim());
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handleSearch();
-  };
-
   return (
     <header className="bg-neutral-900 w-full h-max shadow flex items-center justify-between py-4 px-2">
-      <div className=" flex items-center cursor-pointer" onClick={onResetCategory}>
+      <div className="flex items-center cursor-pointer" onClick={onResetCategory}>
         <Image
           src="/yt-logo.svg"
           alt="CloneTube Logo"
@@ -32,30 +31,8 @@ export default function Header({ onSearch, onResetCategory }: HeaderProps) {
         <p className="text-neutral-500 text-xs ml-1">PL</p>
       </div>
 
-      <div className="flex w-full max-w-lg mx-auto">
-        <input
-          type="text"
-          placeholder="Szukaj"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="flex-1 bg-neutral-800 border border-neutral-700 text-white px-4 py-2 rounded-l-full focus:outline-none focus:border-blue-500"
-        />
-
-        <button
-          type="button"
-          onClick={handleSearch}
-          className="bg-neutral-700 border border-l-0 border-neutral-700 px-5 rounded-r-full flex items-center justify-center hover:bg-neutral-600 transition"
-        >
-          <Image
-            src="/search.svg"
-            alt="Szukaj"
-            width={24}
-            height={24}
-            className="invert"
-          />
-        </button>
-      </div>
+      {/* SearchBar przejął: input, button, handleKeyDown */}
+      <SearchBar value={inputValue} onChange={setInputValue} onSearch={handleSearch} />
     </header>
   );
 }

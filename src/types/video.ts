@@ -4,6 +4,7 @@ export interface VideoItem {
   };
   snippet: {
     title: string;
+    channelTitle: string;
     thumbnails: {
       medium: {
         url: string;
