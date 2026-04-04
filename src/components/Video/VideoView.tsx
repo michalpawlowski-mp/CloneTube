@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import { searchVideos } from "../../lib/searchVideos";
 import { VideoItem, VideoGridProps } from "../../types/video";
 import VideoModal from "./VideoModal";
 import VideoList from "./VideoList";
@@ -14,18 +13,30 @@ export default function VideoView({ selectedCategory }: VideoGridProps) {
   const observerRef = useRef<HTMLDivElement | null>(null);
   const loadingRef = useRef(false);
 
+  const fetchVideos = useCallback(
+    async (category: string, pageToken: string | null = null) => {
+      const params = new URLSearchParams({ q: category });
+      if (pageToken) params.append("pageToken", pageToken);
+
+      const res = await fetch(`/api/search?${params.toString()}`);
+      if (!res.ok) return { items: [], nextPageToken: null };
+      return res.json();
+    },
+    [],
+  );
+
   const fetchMoreVideos = useCallback(async () => {
     if (loadingRef.current || !nextPageToken) return;
     loadingRef.current = true;
     setLoading(true);
 
-    const data = await searchVideos(selectedCategory, nextPageToken);
+    const data = await fetchVideos(selectedCategory, nextPageToken);
 
     setVideos((prev) => [...prev, ...(data.items ?? [])]);
     setNextPageToken(data.nextPageToken ?? null);
     loadingRef.current = false;
     setLoading(false);
-  }, [selectedCategory, nextPageToken]);
+  }, [selectedCategory, nextPageToken, fetchVideos]);
 
   useEffect(() => {
     let cancelled = false;
@@ -35,7 +46,7 @@ export default function VideoView({ selectedCategory }: VideoGridProps) {
     setLoading(true);
     loadingRef.current = true;
 
-    searchVideos(selectedCategory, null).then((data) => {
+    fetchVideos(selectedCategory).then((data) => {
       if (!cancelled) {
         setVideos(data.items ?? []);
         setNextPageToken(data.nextPageToken ?? null);
@@ -48,9 +59,8 @@ export default function VideoView({ selectedCategory }: VideoGridProps) {
       cancelled = true;
       loadingRef.current = false;
     };
-  }, [selectedCategory]);
+  }, [selectedCategory, fetchVideos]);
 
-  // Infinite scroll observer
   useEffect(() => {
     if (!observerRef.current || !nextPageToken) return;
 
